@@ -6,3 +6,4 @@ matplotlib==3.5.1
 mplfinance==0.12.8b9
 plotly == 5.7.0
 pandas_ta == 0.3.14b0
+yfinance == 0.1.70
