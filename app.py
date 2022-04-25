@@ -857,21 +857,21 @@ if bb:
         st.markdown('The Bolinger bands are between the Orange (UpperBand) and Yellow (LowerBand), our Signal line is purple. The idicator suggests optimal time to sell (red) and buy (green) the cryptocurrrecny. ')
         BB(df3, 2)  
 
-if bb: 
+if roc: 
     if ('Bitcoin' in option):
         st.header('Rate of Change -- Bitcoin')
         st.markdown('Trading Rules: ')
-        st.markdown('The Bolinger bands are between the Orange (UpperBand) and Yellow (LowerBand), our Signal line is purple. The idicator suggests optimal time to sell (red) and buy (green) the cryptocurrrecny.')
+        st.markdown('The ROC shows volatility in the dataset')
         roc_plot(df1, 0)
     
     if ('Cardano' in option):
         st.header('Rate of Change -- Cardano')
         st.markdown('Trading Rules: ')
-        st.markdown('The Bolinger bands are between the Orange (UpperBand) and Yellow (LowerBand), our Signal line is purple. The idicator suggests optimal time to sell (red) and buy (green) the cryptocurrrecny.')
+        st.markdown('The ROC shows volatility in the dataset')
         roc_plot(df2, 1)
     
     if ('Ethereum' in option):
         st.header('Rate of Change -- Ethereum')
         st.markdown('Trading Rules: ')
-        st.markdown('The Bolinger bands are between the Orange (UpperBand) and Yellow (LowerBand), our Signal line is purple. The idicator suggests optimal time to sell (red) and buy (green) the cryptocurrrecny. ')
+        st.markdown('The ROC shows volatility inthe dataset')
         roc_plot(df3, 2)   
