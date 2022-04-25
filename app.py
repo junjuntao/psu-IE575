@@ -11,6 +11,7 @@ import datetime
 import numpy as np
 from plotly.subplots import make_subplots
 import plotly.graph_objects as go
+import plotly.io as pio
 import pandas_ta as ta
 
 plt.rcParams["figure.figsize"] = (12,8)
@@ -26,7 +27,8 @@ smaema = st.sidebar.checkbox('SMA & EMA', key='6')
 mas = st.sidebar.checkbox('SMA & EMA & WMA', key='7')
 rsii = st.sidebar.checkbox('RSI', key='8')
 macd = st.sidebar.checkbox('MACD', key='9')
-
+bb = st.sidebar.checkbox('Bolinger Bands', key='0')
+roc = st.sidebar.checkbox('ROC', key='a')
 option = st.sidebar.multiselect(
      'Check the cryptos you want to watch',
      ['Bitcoin', 'Cardano', 'Ethereum'],
@@ -457,7 +459,111 @@ def MACD(df,i):
     fig.update_layout(layout)
     fig.update_layout(title={'y':0.9, 'x':0.5,'xanchor': 'center', 'yanchor': 'top'})
     st.plotly_chart(fig, use_container_width=True)
-    
+
+#ROC
+def ROCs(df, n):  
+    #Calculate difference in closing price from closing price n periods ago
+    M = df["Close"].diff(n)  
+    #N contans the value of closing price n periods ago
+    N = df["Close"].shift(n)  
+    #create ROC
+    ROC = pd.Series(((M / N) * 100), name = 'ROC')   
+    df = df.join(ROC)
+    df.head()
+    return df 
+
+def roc_plot(df,i):
+    n=2
+    df = df[["Close"]]
+    # Compute the n-period Rate of Change for Close column
+    Rocs = ROCs(df,n)
+    Rocs.head()
+    ROC = Rocs['ROC']
+    # Plotting the Price Series chart and the Ease Of Movement below
+    fig = plt.figure(figsize=(15,12))
+    ax = fig.add_subplot(2, 1, 1)
+    ax.set_xticklabels([])
+    plt.plot(df['Close'],lw=1)
+    plt.title(f'{names[i]} Close Price and ROC Indicator')
+    plt.ylabel('Close Price')
+    plt.grid(True)
+    bx = fig.add_subplot(2, 1, 2)
+    plt.plot(ROC,'k',lw=0.75,linestyle='-',label='ROC')
+    plt.legend(loc=2,prop={'size':9})
+    plt.ylabel('ROC values')
+    plt.grid(True)
+    plt.setp(plt.gca().get_xticklabels(), rotation=30)
+
+
+
+#BBands
+def BB(data,i):
+    window=20
+    nstd =2
+    df = data[["Close"]]
+    #Calculating sma
+    sma = df.rolling(window=20).mean().dropna()
+    std = df.rolling(window = window).std().dropna()
+    #Using folrmulas for upper and lower bolinger bands
+    upper_band = sma + std * nstd
+    lower_band = sma - std * nstd
+    upper_band = upper_band.rename(columns={'Close': 'upper'})
+    lower_band = lower_band.rename(columns={'Close': 'lower'})
+    bb = df.join(upper_band).join(lower_band)
+    bb = bb.dropna()
+    #Setting the buy points and sell points
+    #When the actual value of the curve surpasses the upper band - it is a sell indicator
+    # If the actual value of the curve goes below the lower band - it is a buy indicator
+    buyers = bb[bb['Close'] <= bb['lower']]
+    sellers = bb[bb['Close'] >= bb['upper']]
+  
+    fig = go.Figure()
+    #Plotting
+    fig.add_trace(go.Scatter(x=lower_band.index, 
+                            y=lower_band['lower'], 
+                            name='Lower Band', 
+                            line_color='#FECB52'
+                            ))
+    fig.add_trace(go.Scatter(x=upper_band.index, 
+                            y=upper_band['upper'], 
+                            name='Upper Band', 
+                            line_color='#FFA500'
+                            ))
+    fig.add_trace(go.Scatter(x=df.index, 
+                            y=df['Close'], 
+                            name='Close', 
+                            line_color='#636EFA'
+                            ))
+    fig.add_trace(go.Scatter(x=buyers.index, 
+                            y=buyers['Close'], 
+                            name='Buyers', 
+                            mode='markers',
+                            marker=dict(
+                                color='#088F8F',
+                                size=5,
+                                )
+                            ))
+    fig.add_trace(go.Scatter(x=sellers.index, 
+                            y=sellers['Close'], 
+                            name='Sellers', 
+                            mode='markers', 
+                            marker=dict(
+                                color='#EF553B',
+                                size=5,
+                                )
+                            ))
+    fig.update_layout(
+        title={
+            'text': f'{names[i]} Bollinnger Band Indicator',
+            'y':0.9,
+            'x':0.5,
+            'xanchor': 'center',
+            'yanchor': 'top'},
+            xaxis = {'title':"Time"},
+            yaxis = {'title':"Price"}
+            )
+    fig.show()     
+
 if var:
     if ('Bitcoin' in option):
         st.header('Volatility & Variance -- Bitcoin')
@@ -730,4 +836,42 @@ if macd:
         st.header('MACD -- Ethereum')
         st.markdown('Trading Rules: ')
         st.markdown('Our MACD line is yellow, our Signal line is black. When the difference between the MACD and Signal lines is positive (uptrend), the histogram, which is presented as a bar chart underneath the MACD and Signal lines, shows yellow, and when the value is negative, it shows black (downtrend.) ')
-        MACD(df3, 2)    
+        MACD(df3, 2)  
+
+if bb: 
+    if ('Bitcoin' in option):
+        st.header('BB -- Bitcoin')
+        st.markdown('Trading Rules: ')
+        st.markdown('The Bolinger bands are between the Orange (UpperBand) and Yellow (LowerBand), our Signal line is purple. The idicator suggests optimal time to sell (red) and buy (green) the cryptocurrrecny.')
+        BB(df1, 0)
+    
+    if ('Cardano' in option):
+        st.header('BB -- Cardano')
+        st.markdown('Trading Rules: ')
+        st.markdown('The Bolinger bands are between the Orange (UpperBand) and Yellow (LowerBand), our Signal line is purple. The idicator suggests optimal time to sell (red) and buy (green) the cryptocurrrecny.')
+        BB(df2, 1)
+    
+    if ('Ethereum' in option):
+        st.header('BB -- Ethereum')
+        st.markdown('Trading Rules: ')
+        st.markdown('The Bolinger bands are between the Orange (UpperBand) and Yellow (LowerBand), our Signal line is purple. The idicator suggests optimal time to sell (red) and buy (green) the cryptocurrrecny. ')
+        BB(df3, 2)  
+
+if bb: 
+    if ('Bitcoin' in option):
+        st.header('Rate of Change -- Bitcoin')
+        st.markdown('Trading Rules: ')
+        st.markdown('The Bolinger bands are between the Orange (UpperBand) and Yellow (LowerBand), our Signal line is purple. The idicator suggests optimal time to sell (red) and buy (green) the cryptocurrrecny.')
+        roc_plot(df1, 0)
+    
+    if ('Cardano' in option):
+        st.header('Rate of Change -- Cardano')
+        st.markdown('Trading Rules: ')
+        st.markdown('The Bolinger bands are between the Orange (UpperBand) and Yellow (LowerBand), our Signal line is purple. The idicator suggests optimal time to sell (red) and buy (green) the cryptocurrrecny.')
+        roc_plot(df2, 1)
+    
+    if ('Ethereum' in option):
+        st.header('Rate of Change -- Ethereum')
+        st.markdown('Trading Rules: ')
+        st.markdown('The Bolinger bands are between the Orange (UpperBand) and Yellow (LowerBand), our Signal line is purple. The idicator suggests optimal time to sell (red) and buy (green) the cryptocurrrecny. ')
+        roc_plot(df3, 2)   
