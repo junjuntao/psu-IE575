@@ -474,7 +474,10 @@ def ROCs(df, n):
 
 def roc_plot(df,i):
     n=2
-    df = df[["Close"]]
+    try:
+        df = data[['Close']].copy()
+    except:
+        df = data["Close"]
     # Compute the n-period Rate of Change for Close column
     Rocs = ROCs(df,n)
     Rocs.head()
@@ -500,7 +503,11 @@ def roc_plot(df,i):
 def BB(data,i):
     window=20
     nstd =2
-    df = data[["Close"]]
+    try:
+        df = data[['Close']].copy()
+    except:
+        df = data["Close"]
+
     #Calculating sma
     sma = df.rolling(window=20).mean().dropna()
     std = df.rolling(window = window).std().dropna()
