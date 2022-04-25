@@ -633,6 +633,102 @@ if ohlc:
         st.markdown("Cons: Different names when install and import the package")
         demo2(df3, 2)
 
+if owma:
+    if ('Bitcoin' in option):
+        st.header('One WMA -- Bitcoin')
+        st.markdown('Trading Rules: ')
+        st.markdown('WMA in trend following -- First, ensure that the asset is moving in a certain trend. Next, select the most appropriate period to use. Finally, if it is in a bullish trend, keep holding the trade so long as the price is above the moving average. Similarly, if it is a bearish trend, keep holding the trade as long as the price is below the MAs.')
+        mm = st.number_input('Number of Days shown in plot: ',1, 1500, 100, key = "13")
+        num = st.slider('Number of Day for WMA: ', 1, 500, 40, key='28')
+        demo7(data=df1, i=0, n=num, m=mm)
+    
+    if ('Cardano' in option):
+        st.header('One WMA -- Cardano')
+        st.markdown('Trading Rules: ')
+        st.markdown('WMA in trend following -- First, ensure that the asset is moving in a certain trend. Next, select the most appropriate period to use. Finally, if it is in a bullish trend, keep holding the trade so long as the price is above the moving average. Similarly, if it is a bearish trend, keep holding the trade as long as the price is below the MAs.')
+        mm = st.number_input('Number of Days shown in plot: ',1, 1500, 100, key = "14")
+        num = st.slider('Number of Day for WMA: ', 1, 500, 40, key='29')
+        demo7(data=df2, i=1, n=num, m=mm)
+    
+    if ('Ethereum' in option):
+        st.header('One WMA -- Ethereum')
+        st.markdown('Trading Rules: ')
+        st.markdown('WMA in trend following -- First, ensure that the asset is moving in a certain trend. Next, select the most appropriate period to use. Finally, if it is in a bullish trend, keep holding the trade so long as the price is above the moving average. Similarly, if it is a bearish trend, keep holding the trade as long as the price is below the MAs.')
+        mm = st.number_input('Number of Days shown in plot: ',1, 1500, 100, key = "15")
+        num = st.slider('Number of Day for WMA: ', 1, 500, 40, key='30')
+        demo7(data=df3, i=2, n=num, m=mm)    	
+
+if tsma: 
+    if ('Bitcoin' in option):
+        st.header('Two SMAs -- Bitcoin')
+        st.markdown('Trading Rules: Golden Cross and Death Cross')
+        st.markdown('1. A buy signal is generated when a shorter-term moving average crosses above a longer-term moving average. This is called “The Golden Cross”;')
+        st.markdown('2. A sell signal is generated when a short moving average crosses below a long moving average. This is called “The Death Cross”.')
+        mday = st.number_input('Number of Days shown in plot: ',1, 1500, 300, key = "4")
+        num1 = st.slider('Number of Day for Long-term SMA: ', 1, 500, 40, key='7')
+        num2 = st.slider('Number of Day for Short-term SMA: ', 1, 500, 20, key='8')
+        if num1 <= num2: 
+            st.error("Error: Number of day for long-term SMA should be greater than short-term SMA, please choose again")
+        demo4(data=df1, i=0, n1=num1, n2=num2, m=mday)
+        
+    if ('Cardano' in option):
+        st.header('Two SMAs -- Cardano')
+        st.markdown('Trading Rules: Golden Cross and Death Cross')
+        st.markdown('1. A buy signal is generated when a shorter-term moving average crosses above a longer-term moving average. This is called “The Golden Cross”;')
+        st.markdown('2. A sell signal is generated when a short moving average crosses below a long moving average. This is called “The Death Cross”.')
+        mday = st.number_input('Number of Days shown in plot: ',1, 1500, 300, key = "5")
+        num1 = st.slider('Number of Day for Long-term SMA: ', 1, 500, 40, key='9')
+        num2 = st.slider('Number of Day for Short-term SMA: ', 1, 500, 20, key='10')
+        if num1 <= num2: 
+            st.error("Error: Number of day for long-term SMA should be greater than short-term SMA, please choose again")
+        demo4(data=df2, i=1, n1=num1, n2=num2, m=mday)
+        
+    if ('Ethereum' in option):
+        st.header('Two SMAs -- Ethereum')
+        st.markdown('Trading Rules: Golden Cross and Death Cross')
+        st.markdown('1. A buy signal is generated when a shorter-term moving average crosses above a longer-term moving average. This is called “The Golden Cross”;')
+        st.markdown('2. A sell signal is generated when a short moving average crosses below a long moving average. This is called “The Death Cross”.')
+        mday = st.number_input('Number of Days shown in plot: ',1, 1500, 300, key = "6")
+        num1 = st.slider('Number of Day for Long-term SMA: ', 1, 500, 40, key='11')
+        num2 = st.slider('Number of Day for Short-term SMA: ', 1, 500, 20, key='12')
+        if num1 <= num2: 
+            st.error("Error: Number of day for long-term SMA should be greater than short-term SMA, please choose again")
+        demo4(data=df3, i=2, n1=num1, n2=num2, m=mday)
+
+if twma:
+    if ('Bitcoin' in option):
+        st.header('Two WMAs -- Bitcoin')
+        st.markdown('Trading Rules: ')
+        st.markdown('WMA in finding reversals -- The crossover of short-term WMA and long-term WMA indicates the reversals;')
+        mm = st.number_input('Number of Days shown in plot: ',1, 1500, 100, key = "10")
+        num1 = st.slider('Number of Day for Long-term WMA: ', 1, 500, 40, key='22')
+        num2 = st.slider('Number of Day for Short-term WMA: ', 1, 500, 20, key='23')
+        if num1 <= num2: 
+            st.error("Error: Number of day for long-term WMA should be greater than short-term WMA, please choose again")
+        demo6(data=df1, i=0, n1=num1, n2=num2, m=mm)
+        
+    if ('Cardano' in option):
+        st.header('Two WMAs -- Cardano')
+        st.markdown('Trading Rules: ')
+        st.markdown('WMA in finding reversals -- The crossover of short-term WMA and long-term WMA indicates the reversals;')
+        mm = st.number_input('Number of Days shown in plot: ',1, 1500, 100, key = "11")
+        num1 = st.slider('Number of Day for Long-term WMA: ', 1, 500, 40, key='24')
+        num2 = st.slider('Number of Day for Short-term WMA: ', 1, 500, 20, key='25')
+        if num1 <= num2: 
+            st.error("Error: Number of day for long-term WMA should be greater than short-term WMA, please choose again")
+        demo6(data=df2, i=1, n1=num1, n2=num2, m=mm)
+        
+    if ('Ethereum' in option):
+        st.header('Two WMAs -- Ethereum')
+        st.markdown('Trading Rules: ')
+        st.markdown('WMA in finding reversals -- The crossover of short-term WMA and long-term WMA indicates the reversals;')
+        mm = st.number_input('Number of Days shown in plot: ',1, 1500, 100, key = "12")
+        num1 = st.slider('Number of Day for Long-term WMA: ', 1, 500, 40, key='26')
+        num2 = st.slider('Number of Day for Short-term WMA: ', 1, 500, 20, key='27')
+        if num1 <= num2: 
+            st.error("Error: Number of day for long-term WMA should be greater than short-term WMA, please choose again")
+        demo6(data=df3, i=2, n1=num1, n2=num2, m=mm)
+	
 if smaema:
     if ('Bitcoin' in option):
         st.header('SMA & EMA -- Bitcoin')
@@ -673,42 +769,6 @@ if smaema:
         num3 = st.slider('Number of Day for EMA: ', 1, 500, 20)
         demo3(data=df3,i=2, n1=num1, n2=num2, n3=num3, m=mday)
         
-if tsma: 
-    if ('Bitcoin' in option):
-        st.header('Two SMAs -- Bitcoin')
-        st.markdown('Trading Rules: Golden Cross and Death Cross')
-        st.markdown('1. A buy signal is generated when a shorter-term moving average crosses above a longer-term moving average. This is called “The Golden Cross”;')
-        st.markdown('2. A sell signal is generated when a short moving average crosses below a long moving average. This is called “The Death Cross”.')
-        mday = st.number_input('Number of Days shown in plot: ',1, 1500, 300, key = "4")
-        num1 = st.slider('Number of Day for Long-term SMA: ', 1, 500, 40, key='7')
-        num2 = st.slider('Number of Day for Short-term SMA: ', 1, 500, 20, key='8')
-        if num1 <= num2: 
-            st.error("Error: Number of day for long-term SMA should be greater than short-term SMA, please choose again")
-        demo4(data=df1, i=0, n1=num1, n2=num2, m=mday)
-        
-    if ('Cardano' in option):
-        st.header('Two SMAs -- Cardano')
-        st.markdown('Trading Rules: Golden Cross and Death Cross')
-        st.markdown('1. A buy signal is generated when a shorter-term moving average crosses above a longer-term moving average. This is called “The Golden Cross”;')
-        st.markdown('2. A sell signal is generated when a short moving average crosses below a long moving average. This is called “The Death Cross”.')
-        mday = st.number_input('Number of Days shown in plot: ',1, 1500, 300, key = "5")
-        num1 = st.slider('Number of Day for Long-term SMA: ', 1, 500, 40, key='9')
-        num2 = st.slider('Number of Day for Short-term SMA: ', 1, 500, 20, key='10')
-        if num1 <= num2: 
-            st.error("Error: Number of day for long-term SMA should be greater than short-term SMA, please choose again")
-        demo4(data=df2, i=1, n1=num1, n2=num2, m=mday)
-        
-    if ('Ethereum' in option):
-        st.header('Two SMAs -- Ethereum')
-        st.markdown('Trading Rules: Golden Cross and Death Cross')
-        st.markdown('1. A buy signal is generated when a shorter-term moving average crosses above a longer-term moving average. This is called “The Golden Cross”;')
-        st.markdown('2. A sell signal is generated when a short moving average crosses below a long moving average. This is called “The Death Cross”.')
-        mday = st.number_input('Number of Days shown in plot: ',1, 1500, 300, key = "6")
-        num1 = st.slider('Number of Day for Long-term SMA: ', 1, 500, 40, key='11')
-        num2 = st.slider('Number of Day for Short-term SMA: ', 1, 500, 20, key='12')
-        if num1 <= num2: 
-            st.error("Error: Number of day for long-term SMA should be greater than short-term SMA, please choose again")
-        demo4(data=df3, i=2, n1=num1, n2=num2, m=mday)
         
 if mas:
     if ('Bitcoin' in option):
@@ -737,66 +797,7 @@ if mas:
         num2 = st.slider('Number of Day for EMA: ', 1, 500, 40, key='20')
         num3 = st.slider('Number of Day for WMA: ', 1, 500, 40, key='21')
         demo5(data=df3,i=2, n1=num1, n2=num2, n3=num3, m=mday)
-        
-if twma:
-    if ('Bitcoin' in option):
-        st.header('Two WMAs -- Bitcoin')
-        st.markdown('Trading Rules: ')
-        st.markdown('WMA in finding reversals -- The crossover of short-term WMA and long-term WMA indicates the reversals;')
-        mm = st.number_input('Number of Days shown in plot: ',1, 1500, 100, key = "10")
-        num1 = st.slider('Number of Day for Long-term WMA: ', 1, 500, 40, key='22')
-        num2 = st.slider('Number of Day for Short-term WMA: ', 1, 500, 20, key='23')
-        if num1 <= num2: 
-            st.error("Error: Number of day for long-term WMA should be greater than short-term WMA, please choose again")
-        demo6(data=df1, i=0, n1=num1, n2=num2, m=mm)
-        
-    if ('Cardano' in option):
-        st.header('Two WMAs -- Cardano')
-        st.markdown('Trading Rules: ')
-        st.markdown('WMA in finding reversals -- The crossover of short-term WMA and long-term WMA indicates the reversals;')
-        mm = st.number_input('Number of Days shown in plot: ',1, 1500, 100, key = "11")
-        num1 = st.slider('Number of Day for Long-term WMA: ', 1, 500, 40, key='24')
-        num2 = st.slider('Number of Day for Short-term WMA: ', 1, 500, 20, key='25')
-        if num1 <= num2: 
-            st.error("Error: Number of day for long-term WMA should be greater than short-term WMA, please choose again")
-        demo6(data=df2, i=1, n1=num1, n2=num2, m=mm)
-        
-    if ('Ethereum' in option):
-        st.header('Two WMAs -- Ethereum')
-        st.markdown('Trading Rules: ')
-        st.markdown('WMA in finding reversals -- The crossover of short-term WMA and long-term WMA indicates the reversals;')
-        mm = st.number_input('Number of Days shown in plot: ',1, 1500, 100, key = "12")
-        num1 = st.slider('Number of Day for Long-term WMA: ', 1, 500, 40, key='26')
-        num2 = st.slider('Number of Day for Short-term WMA: ', 1, 500, 20, key='27')
-        if num1 <= num2: 
-            st.error("Error: Number of day for long-term WMA should be greater than short-term WMA, please choose again")
-        demo6(data=df3, i=2, n1=num1, n2=num2, m=mm)
-        
-if owma:
-    if ('Bitcoin' in option):
-        st.header('One WMA -- Bitcoin')
-        st.markdown('Trading Rules: ')
-        st.markdown('WMA in trend following -- First, ensure that the asset is moving in a certain trend. Next, select the most appropriate period to use. Finally, if it is in a bullish trend, keep holding the trade so long as the price is above the moving average. Similarly, if it is a bearish trend, keep holding the trade as long as the price is below the MAs.')
-        mm = st.number_input('Number of Days shown in plot: ',1, 1500, 100, key = "13")
-        num = st.slider('Number of Day for WMA: ', 1, 500, 40, key='28')
-        demo7(data=df1, i=0, n=num, m=mm)
-    
-    if ('Cardano' in option):
-        st.header('One WMA -- Cardano')
-        st.markdown('Trading Rules: ')
-        st.markdown('WMA in trend following -- First, ensure that the asset is moving in a certain trend. Next, select the most appropriate period to use. Finally, if it is in a bullish trend, keep holding the trade so long as the price is above the moving average. Similarly, if it is a bearish trend, keep holding the trade as long as the price is below the MAs.')
-        mm = st.number_input('Number of Days shown in plot: ',1, 1500, 100, key = "14")
-        num = st.slider('Number of Day for WMA: ', 1, 500, 40, key='29')
-        demo7(data=df2, i=1, n=num, m=mm)
-    
-    if ('Ethereum' in option):
-        st.header('One WMA -- Ethereum')
-        st.markdown('Trading Rules: ')
-        st.markdown('WMA in trend following -- First, ensure that the asset is moving in a certain trend. Next, select the most appropriate period to use. Finally, if it is in a bullish trend, keep holding the trade so long as the price is above the moving average. Similarly, if it is a bearish trend, keep holding the trade as long as the price is below the MAs.')
-        mm = st.number_input('Number of Days shown in plot: ',1, 1500, 100, key = "15")
-        num = st.slider('Number of Day for WMA: ', 1, 500, 40, key='30')
-        demo7(data=df3, i=2, n=num, m=mm)         
-
+             
 if rsii:
     df1['bitcoin_rsi'] = rsi(df1)
     df2['cardano_rsi'] = rsi(df2)
