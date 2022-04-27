@@ -480,7 +480,7 @@ def roc_plot(data,i):
     Rocs.head()
     ROC = Rocs['ROC']
     # Plotting the Price Series chart and the Ease Of Movement below
-    fig = plt.figure(figsize=(15,12))
+    fig = plt.figure(figsize=(10,8))
     ax = fig.add_subplot(2, 1, 1)
     ax.set_xticklabels([])
     plt.plot(df['Close'],lw=1)
@@ -500,7 +500,7 @@ def roc_plot(data,i):
 #BBands
 def BB(data,i):
     window=20
-    nstd =2
+    nstd =1
     df = pd.DataFrame([data.Close]).transpose()
     #Calculating sma
     sma = df.rolling(window=20).mean().dropna()
@@ -519,6 +519,7 @@ def BB(data,i):
     sellers = bb[bb['Close'] >= bb['upper']]
   
     fig = go.Figure()
+    
     #Plotting
     fig.add_trace(go.Scatter(x=lower_band.index, 
                             y=lower_band['lower'], 
@@ -554,6 +555,9 @@ def BB(data,i):
                                 )
                             ))
     fig.update_layout(
+        autosize=False,
+        width=1000,
+        height=500,
         title={
             'text': f'{names[i]} Bollinnger Band Indicator',
             'y':0.9,
